@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico de Maturidade — EVOX</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <div class="navbar-bars">
+        <span style="width:5px;height:6px;background:#185FA5;"></span>
+        <span style="width:5px;height:10px;background:#378ADD;"></span>
+        <span style="width:5px;height:15px;background:#85B7EB;"></span>
+      </div>
+      <span class="navbar-wordmark">EVO<em>X</em></span>
+    </a>
+    <div class="navbar-links">
+      <a href="index.html">← Voltar ao início</a>
+    </div>
+  </nav>
+
+  <!-- DIAGNÓSTICO PAGE -->
+  <div class="diag-page">
+
+    <!-- HEADER -->
+    <div class="diag-header">
+      <div class="container">
+        <div class="diag-header-inner">
+          <div>
+            <div class="diag-title">Diagnóstico de Maturidade Operacional</div>
+            <div class="diag-subtitle">Responda com honestidade — o resultado é mais preciso quanto mais real for a sua situação atual.</div>
+          </div>
+          <div class="diag-progress-wrap">
+            <div class="diag-progress-label">
+              <span id="progress-label">0 de 20 perguntas</span>
+              <span id="progress-pct">0%</span>
+            </div>
+            <div class="diag-progress-track">
+              <div class="diag-progress-fill" id="progress-fill" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="diag-body">
+      <div class="container">
+
+        <!-- pilar badge + título -->
+        <div class="badge badge-outline" id="pilar-badge">Pilar 1 de 4</div>
+        <h2 class="diag-pilar-title" id="pilar-nome"></h2>
+        <p class="diag-pilar-sub" id="pilar-sub"></p>
+
+        <!-- perguntas renderizadas pelo JS -->
+        <div id="pilar-container"></div>
+
+        <!-- navegação -->
+        <div class="diag-nav">
+          <button class="btn btn-outline" id="btn-anterior" style="background:transparent;color:var(--muted);border-color:var(--border);">
+            ← Anterior
+          </button>
+
+          <div class="diag-steps-dots" id="diag-dots"></div>
+
+          <button class="btn btn-primary" id="btn-proximo" disabled>
+            Próximo pilar →
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- atualiza % no label -->
+  <script>
+    const origAtualizarProgresso = window.atualizarProgresso;
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new MutationObserver(() => {
+        const fill = document.getElementById('progress-fill');
+        const pct  = document.getElementById('progress-pct');
+        if (fill && pct) pct.textContent = fill.style.width;
+      });
+      const fill = document.getElementById('progress-fill');
+      if (fill) observer.observe(fill, { attributes: true });
+    });
+  </script>
+  <script src="js/diagnostico.js"></script>
+</body>
+</html>

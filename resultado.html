@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seu Resultado — EVOX</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <div class="navbar-bars">
+        <span style="width:5px;height:6px;background:#185FA5;"></span>
+        <span style="width:5px;height:10px;background:#378ADD;"></span>
+        <span style="width:5px;height:15px;background:#85B7EB;"></span>
+      </div>
+      <span class="navbar-wordmark">EVO<em>X</em></span>
+    </a>
+    <div class="navbar-links">
+      <a href="diagnostico.html">← Refazer diagnóstico</a>
+    </div>
+  </nav>
+
+  <!-- RESULTADO PAGE -->
+  <div class="resultado-page">
+
+    <!-- HEADER COM SCORE -->
+    <div class="resultado-header">
+      <div class="container">
+        <div class="resultado-header-inner">
+          <div class="score-big">
+            <div class="score-big-num" id="score-num">—</div>
+            <div class="score-big-den">de 5,0</div>
+          </div>
+          <div>
+            <div style="margin-bottom:10px;">
+              <span class="badge" id="nivel-badge" style="font-size:0.78rem;padding:6px 14px;border-radius:20px;">—</span>
+            </div>
+            <h1 class="resultado-titulo" id="resultado-nivel" style="font-family:var(--font-display);font-size:1.9rem;font-weight:800;color:#fff;margin-bottom:8px;"></h1>
+            <p class="resultado-desc" id="resultado-desc"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="resultado-body">
+      <div class="container">
+
+        <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;margin-bottom:24px;">
+
+          <!-- cards por pilar -->
+          <div>
+            <div class="section-eyebrow" style="margin-bottom:16px;">Resultado por pilar</div>
+            <div class="resultado-grid" id="pilares-grid"></div>
+          </div>
+
+          <!-- radar -->
+          <div class="radar-wrap" style="min-width:300px;">
+            <h3>Visão geral</h3>
+            <canvas id="radar-canvas"></canvas>
+          </div>
+
+        </div>
+
+        <!-- EBOOK -->
+        <div class="section-eyebrow" style="margin-bottom:16px;">Seu material exclusivo</div>
+        <div class="ebook-card">
+          <div class="ebook-cover">
+            <div class="ebook-cover-bars">
+              <span style="width:7px;height:9px;background:#185FA5;"></span>
+              <span style="width:7px;height:15px;background:#378ADD;"></span>
+              <span style="width:7px;height:22px;background:#85B7EB;"></span>
+            </div>
+            <div class="ebook-cover-label">EVOX<br>GUIA</div>
+          </div>
+          <div class="ebook-text" style="flex:1;">
+            <h3>Guia prático de excelência operacional — do diagnóstico à transformação</h3>
+            <p>Baseado no seu resultado, preparamos este material com frameworks, checklists e estudos de caso para acelerar sua evolução operacional.</p>
+            <form class="ebook-form" id="ebook-form">
+              <input type="text"  id="ebook-nome"  placeholder="Seu nome" required autocomplete="name">
+              <input type="email" id="ebook-email" placeholder="Seu melhor e-mail" required autocomplete="email">
+              <button type="submit" class="btn btn-primary" style="white-space:nowrap;">
+                Baixar ebook gratuito
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- CTA consulta -->
+        <div style="margin-top:24px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+          <div>
+            <h3 style="font-size:1.1rem;color:var(--text);margin-bottom:6px;">Quer entender o que fazer a partir daqui?</h3>
+            <p style="font-size:0.88rem;margin:0;">Converse com um especialista EVOX e descubra o caminho mais rápido para evoluir sua operação.</p>
+          </div>
+          <a href="mailto:contato@evox.com.br" class="btn btn-primary">
+            Falar com especialista →
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/resultado.js"></script>
+</body>
+</html>

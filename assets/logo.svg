@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#0C447C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <g transform="translate(8, 8)">
+    <rect x="0"  y="34" width="9" height="12" rx="2" fill="#185FA5"/>
+    <rect x="13" y="24" width="9" height="22" rx="2" fill="#378ADD"/>
+    <rect x="26" y="10" width="9" height="36" rx="2" fill="#85B7EB"/>
+    <line x1="4" y1="30" x2="30" y2="6" stroke="#0C447C" stroke-width="2" stroke-linecap="round" marker-end="url(#arr)"/>
+  </g>
+  <text x="56" y="40" font-family="Barlow Condensed, Barlow, Arial, sans-serif" font-weight="800" font-size="34" fill="#0C447C" letter-spacing="-0.5">EVO</text>
+  <text x="122" y="40" font-family="Barlow Condensed, Barlow, Arial, sans-serif" font-weight="800" font-size="34" fill="#378ADD" letter-spacing="-0.5">X</text>
+</svg>
