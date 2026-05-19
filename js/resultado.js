@@ -88,12 +88,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupEbookForm(lead);
 
   // ── POST 2: salva notas + respostas detalhadas usando o lead_id já criado ──
+  const baseHeaders = {
+    'Content-Type':  'application/json',
+    'apikey':        SUPABASE_ANON,
+    'Authorization': `Bearer ${SUPABASE_ANON}`
+  };
+
   if (leadId) {
     try {
       // 2a. atualiza as notas na linha do lead já existente
       await fetch(`${SUPABASE_URL}/rest/v1/leads?id=eq.${leadId}`, {
         method: 'PATCH',
-        headers: DB_HEADERS,
+        headers: baseHeaders,
         body: JSON.stringify({
           nota_geral:       notaGeral,
           nota_fundacao:    notas.fundacao,
@@ -122,7 +128,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       await fetch(`${SUPABASE_URL}/rest/v1/respostas`, {
         method: 'POST',
-        headers: DB_HEADERS,
+        headers: { ...baseHeaders, 'Prefer': 'return=minimal' },
         body: JSON.stringify(linhas)
       });
 
