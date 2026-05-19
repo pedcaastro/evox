@@ -303,7 +303,10 @@
   </div>
 
   <script>
-    document.getElementById('lead-form').addEventListener('submit', function(e) {
+    const SUPABASE_URL  = 'https://xgpdwusicfwvdzlhhovw.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhncGR3dXNpY2Z3dmR6bGhob3Z3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMzYyNjYsImV4cCI6MjA5NDcxMjI2Nn0.P3twaDTYVKLoVAI4Rxojw9xXrHgIdmqhw4YMsWjpilM';
+
+    document.getElementById('lead-form').addEventListener('submit', async function(e) {
       e.preventDefault();
 
       const nome     = document.getElementById('nome').value.trim();
@@ -315,7 +318,7 @@
       const erro     = document.getElementById('form-error');
       const btn      = document.getElementById('btn-submit');
 
-      // validação básica
+      // validação
       if (!nome || !email || !empresa || !tamanho) {
         erro.textContent = 'Preencha todos os campos obrigatórios (*)';
         erro.style.display = 'block';
@@ -327,21 +330,50 @@
         return;
       }
       erro.style.display = 'none';
-
-      // salva no localStorage para usar no final
-      localStorage.setItem('evox_lead', JSON.stringify({ nome, email, empresa, tamanho, cargo, segmento }));
-
-      // limpa diagnóstico anterior se existir
-      localStorage.removeItem('evox_respostas');
-      localStorage.removeItem('evox_pilar');
-      localStorage.removeItem('evox_notas');
-      localStorage.removeItem('evox_nota_geral');
-
       btn.disabled = true;
-      btn.innerHTML = 'Carregando... <span style="opacity:0.6;">aguarde</span>';
+      btn.innerHTML = 'Salvando... <span style="opacity:0.6;">aguarde</span>';
 
-      // vai para o diagnóstico
-      setTimeout(() => { window.location.href = 'diagnostico.html'; }, 400);
+      // ── POST 1: salva lead no Supabase e obtém o lead_id ──────────────────
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+          method: 'POST',
+          headers: {
+            'Content-Type':  'application/json',
+            'apikey':        SUPABASE_ANON,
+            'Authorization': `Bearer ${SUPABASE_ANON}`,
+            'Prefer':        'return=representation'
+          },
+          body: JSON.stringify({ nome, email, empresa, tamanho, cargo: cargo || null, segmento: segmento || null })
+        });
+
+        if (!res.ok) {
+          const err = await res.text();
+          throw new Error(err);
+        }
+
+        const data   = await res.json();
+        const leadId = data[0].id;
+
+        // salva lead_id e dados no localStorage para usar no resultado
+        localStorage.setItem('evox_lead_id', leadId);
+        localStorage.setItem('evox_lead', JSON.stringify({ nome, email, empresa, tamanho, cargo, segmento }));
+
+        // limpa diagnóstico anterior
+        localStorage.removeItem('evox_respostas');
+        localStorage.removeItem('evox_pilar');
+        localStorage.removeItem('evox_notas');
+        localStorage.removeItem('evox_nota_geral');
+
+        btn.innerHTML = 'Iniciando diagnóstico...';
+        setTimeout(() => { window.location.href = 'diagnostico.html'; }, 300);
+
+      } catch (err) {
+        console.error('Erro ao salvar lead:', err);
+        erro.textContent = 'Erro ao salvar seus dados. Tente novamente.';
+        erro.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = 'Iniciar diagnóstico <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      }
     });
   </script>
 </body>

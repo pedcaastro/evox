@@ -1,4 +1,16 @@
-// ─── MAPEAMENTO DE NÍVEL ─────────────────────────────────────────────────────
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+
+const SUPABASE_URL  = 'https://xgpdwusicfwvdzlhhovw.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhncGR3dXNpY2Z3dmR6bGhob3Z3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMzYyNjYsImV4cCI6MjA5NDcxMjI2Nn0.P3twaDTYVKLoVAI4Rxojw9xXrHgIdmqhw4YMsWjpilM';
+
+const DB_HEADERS = {
+  'Content-Type':  'application/json',
+  'apikey':        SUPABASE_ANON,
+  'Authorization': `Bearer ${SUPABASE_ANON}`,
+  'Prefer':        'return=representation'
+};
+
+// ─── NÍVEIS ───────────────────────────────────────────────────────────────────
 
 const NIVEIS = [
   { min: 0.0, max: 1.0, nome: 'Inicial',            cor: '#DC2626', desc: 'Processos inexistentes ou totalmente informais. Há muito espaço para estruturar a operação.' },
@@ -15,58 +27,7 @@ const PILARES_NOMES = {
   indicadores: 'Gestão de Indicadores',
 };
 
-// ─── SUPABASE ─────────────────────────────────────────────────────────────────
-
-const SUPABASE_URL  = 'https://xgpdwusicfwvdzlhhovw.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhncGR3dXNpY2Z3dmR6bGhob3Z3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMzYyNjYsImV4cCI6MjA5NDcxMjI2Nn0.P3twaDTYVKLoVAI4Rxojw9xXrHgIdmqhw4YMsWjpilM';
-
-const DB_HEADERS = {
-  'Content-Type':  'application/json',
-  'apikey':        SUPABASE_ANON,
-  'Authorization': `Bearer ${SUPABASE_ANON}`,
-  'Prefer':        'return=representation'
-};
-
-async function salvarNoSupabase(lead, notas, notaGeral, respostasRaw) {
-  // 1. salva lead
-  const resLead = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
-    method: 'POST', headers: DB_HEADERS,
-    body: JSON.stringify({
-      nome: lead.nome, email: lead.email,
-      empresa: lead.empresa, tamanho: lead.tamanho,
-      cargo: lead.cargo || null, segmento: lead.segmento || null,
-      nota_geral: notaGeral,
-      nota_fundacao: notas.fundacao, nota_capacidade: notas.capacidade,
-      nota_estrategia: notas.estrategia, nota_indicadores: notas.indicadores,
-    })
-  });
-  if (!resLead.ok) throw new Error(await resLead.text());
-  const leadData = await resLead.json();
-  const leadId   = leadData[0].id;
-
-  // 2. monta linhas de respostas
-  const linhas = [];
-  PILARES_DATA.forEach(pilar => {
-    pilar.perguntas.forEach((pergunta, qIdx) => {
-      const key       = `${pilar.id}_${qIdx}`;
-      const pontuacao = respostasRaw[key] !== undefined ? respostasRaw[key] : 0;
-      linhas.push({
-        lead_id: leadId, pilar: pilar.nome,
-        pergunta_num: qIdx + 1, pergunta: pergunta.texto,
-        resposta: pergunta.opcoes[pontuacao], pontuacao
-      });
-    });
-  });
-
-  // 3. salva respostas
-  const resResp = await fetch(`${SUPABASE_URL}/rest/v1/respostas`, {
-    method: 'POST', headers: DB_HEADERS, body: JSON.stringify(linhas)
-  });
-  if (!resResp.ok) throw new Error(await resResp.text());
-  return leadId;
-}
-
-// ─── DADOS DOS PILARES ────────────────────────────────────────────────────────
+// ─── PILARES (para montar texto das respostas) ────────────────────────────────
 
 const PILARES_DATA = [
   {
@@ -117,6 +78,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const notas        = JSON.parse(localStorage.getItem('evox_notas')      || '{}');
   const notaGeral    = parseFloat(localStorage.getItem('evox_nota_geral') || '0');
   const lead         = JSON.parse(localStorage.getItem('evox_lead')       || '{}');
+  const leadId       = localStorage.getItem('evox_lead_id');
   const respostasRaw = JSON.parse(localStorage.getItem('evox_respostas')  || '{}');
 
   if (!Object.keys(notas).length) { window.location.href = 'lead.html'; return; }
@@ -125,13 +87,61 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderRadar(notas);
   setupEbookForm(lead);
 
-  if (lead.email) {
-    try { await salvarNoSupabase(lead, notas, notaGeral, respostasRaw); }
-    catch (err) { console.warn('Supabase:', err); }
+  // ── POST 2: salva notas + respostas detalhadas usando o lead_id já criado ──
+  if (leadId) {
+    try {
+      // 2a. atualiza as notas na linha do lead já existente
+      await fetch(`${SUPABASE_URL}/rest/v1/leads?id=eq.${leadId}`, {
+        method: 'PATCH',
+        headers: DB_HEADERS,
+        body: JSON.stringify({
+          nota_geral:       notaGeral,
+          nota_fundacao:    notas.fundacao,
+          nota_capacidade:  notas.capacidade,
+          nota_estrategia:  notas.estrategia,
+          nota_indicadores: notas.indicadores,
+        })
+      });
+
+      // 2b. monta e insere as 20 respostas
+      const linhas = [];
+      PILARES_DATA.forEach(pilar => {
+        pilar.perguntas.forEach((pergunta, qIdx) => {
+          const key       = `${pilar.id}_${qIdx}`;
+          const pontuacao = respostasRaw[key] !== undefined ? respostasRaw[key] : 0;
+          linhas.push({
+            lead_id:      leadId,
+            pilar:        pilar.nome,
+            pergunta_num: qIdx + 1,
+            pergunta:     pergunta.texto,
+            resposta:     pergunta.opcoes[pontuacao],
+            pontuacao:    pontuacao
+          });
+        });
+      });
+
+      await fetch(`${SUPABASE_URL}/rest/v1/respostas`, {
+        method: 'POST',
+        headers: DB_HEADERS,
+        body: JSON.stringify(linhas)
+      });
+
+      console.log('✓ Respostas salvas no Supabase');
+
+      // limpa estado do diagnóstico (mantém só o lead para o ebook)
+      localStorage.removeItem('evox_respostas');
+      localStorage.removeItem('evox_pilar');
+      localStorage.removeItem('evox_lead_id');
+
+    } catch (err) {
+      console.warn('Erro ao salvar respostas:', err);
+    }
+  } else {
+    console.warn('lead_id não encontrado — o lead não passou pelo formulário inicial');
   }
 });
 
-// ─── RENDER ───────────────────────────────────────────────────────────────────
+// ─── RENDER RESULTADO ─────────────────────────────────────────────────────────
 
 function renderResultado(notas, notaGeral, lead) {
   const nivel = getNivel(notaGeral);
@@ -191,15 +201,29 @@ function renderRadar(notas) {
   ctx.clearRect(0,0,W,H);
   for (let lvl=1;lvl<=5;lvl++) {
     ctx.beginPath();
-    for (let i=0;i<n;i++) { const r=(lvl/5)*R; i===0?ctx.moveTo(cx+r*Math.cos(ang(i)),cy+r*Math.sin(ang(i))):ctx.lineTo(cx+r*Math.cos(ang(i)),cy+r*Math.sin(ang(i))); }
+    for (let i=0;i<n;i++) {
+      const r=(lvl/5)*R;
+      i===0 ? ctx.moveTo(cx+r*Math.cos(ang(i)), cy+r*Math.sin(ang(i)))
+            : ctx.lineTo(cx+r*Math.cos(ang(i)), cy+r*Math.sin(ang(i)));
+    }
     ctx.closePath(); ctx.strokeStyle=lvl===5?'#CBD5E1':'#E2E8F0'; ctx.lineWidth=0.5; ctx.stroke();
   }
-  for (let i=0;i<n;i++) { ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+R*Math.cos(ang(i)),cy+R*Math.sin(ang(i))); ctx.strokeStyle='#E2E8F0'; ctx.lineWidth=0.5; ctx.stroke(); }
+  for (let i=0;i<n;i++) {
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+R*Math.cos(ang(i)), cy+R*Math.sin(ang(i)));
+    ctx.strokeStyle='#E2E8F0'; ctx.lineWidth=0.5; ctx.stroke();
+  }
   ctx.beginPath();
   values.forEach((v,i) => { const p=pt(i,v); i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y); });
   ctx.closePath(); ctx.fillStyle='rgba(24,95,165,0.15)'; ctx.strokeStyle='#185FA5'; ctx.lineWidth=2; ctx.fill(); ctx.stroke();
-  values.forEach((v,i) => { const p=pt(i,v); ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2); ctx.fillStyle='#185FA5'; ctx.fill(); ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke(); });
-  ['Fundação','Capacidade','Estratégia','Indicadores'].forEach((l,i) => { const r=R+22; ctx.font='11px Inter,sans-serif'; ctx.fillStyle='#64748B'; ctx.textAlign='center'; ctx.fillText(l,cx+r*Math.cos(ang(i)),cy+r*Math.sin(ang(i))+4); });
+  values.forEach((v,i) => {
+    const p=pt(i,v); ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2);
+    ctx.fillStyle='#185FA5'; ctx.fill(); ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+  });
+  ['Fundação','Capacidade','Estratégia','Indicadores'].forEach((l,i) => {
+    const r=R+22; ctx.font='11px Inter,sans-serif'; ctx.fillStyle='#64748B'; ctx.textAlign='center';
+    ctx.fillText(l, cx+r*Math.cos(ang(i)), cy+r*Math.sin(ang(i))+4);
+  });
 }
 
 // ─── EBOOK ────────────────────────────────────────────────────────────────────
@@ -218,7 +242,6 @@ function setupEbookForm(lead) {
     mostrarToast('✓ Ebook liberado! Download iniciando...', 'success');
     const link = document.createElement('a');
     link.href = 'assets/ebook.pdf'; link.download = 'ebook-evox.pdf'; link.click();
-    localStorage.removeItem('evox_respostas'); localStorage.removeItem('evox_pilar');
   });
 }
 
