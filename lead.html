@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Diagnóstico — EVOX</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <style>
+    .lead-page {
+      min-height: 100vh;
+      background: var(--bg);
+      padding-top: 64px;
+      display: flex;
+      flex-direction: column;
+    }
+    .lead-hero {
+      background: var(--navy);
+      padding: 48px 0 40px;
+    }
+    .lead-hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .lead-hero h1 {
+      color: var(--white);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      margin-bottom: 12px;
+    }
+    .lead-hero h1 em { font-style: normal; color: var(--accent); }
+    .lead-hero p { color: rgba(255,255,255,0.5); font-size: 0.95rem; }
+
+    .lead-stats {
+      display: flex; gap: 24px; flex-wrap: wrap;
+    }
+    .lead-stat {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .lead-stat-num {
+      font-family: var(--font-display);
+      font-size: 1.8rem; font-weight: 800;
+      color: var(--white); line-height: 1;
+    }
+    .lead-stat-label {
+      font-family: var(--font-ui);
+      font-size: 0.75rem; color: rgba(255,255,255,0.4);
+      letter-spacing: 0.05em;
+    }
+
+    .lead-body {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 24px 80px;
+    }
+    .lead-form-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: var(--shadow);
+    }
+    .lead-form-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem; font-weight: 800;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .lead-form-sub {
+      font-size: 0.88rem; color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-group {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      font-family: var(--font-ui);
+      font-size: 0.75rem; font-weight: 600;
+      color: var(--muted); letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .form-input, .form-select {
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      font-family: var(--font-ui);
+      font-size: 0.92rem;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      width: 100%;
+    }
+    .form-input:focus, .form-select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(24,95,165,0.1);
+    }
+    .form-input::placeholder { color: #B0BAC8; }
+    .form-select { cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+    }
+    .form-divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 20px 0;
+    }
+    .form-submit {
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+      border-radius: 10px;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    .form-submit:disabled {
+      opacity: 0.6; cursor: not-allowed; transform: none !important;
+    }
+    .form-note {
+      font-family: var(--font-ui);
+      font-size: 0.75rem; color: var(--muted);
+      text-align: center; margin-top: 12px;
+      display: flex; align-items: center;
+      justify-content: center; gap: 6px;
+    }
+    .form-error {
+      background: #FEF2F2; border: 1px solid #FECACA;
+      color: #DC2626; border-radius: 8px;
+      padding: 10px 14px; font-size: 0.85rem;
+      margin-bottom: 16px; display: none;
+    }
+    .pilares-preview {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-top: 16px;
+    }
+    .pilar-preview-item {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--bg); border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .pilar-preview-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--blue); flex-shrink: 0;
+    }
+    .pilar-preview-name {
+      font-family: var(--font-ui);
+      font-size: 0.8rem; font-weight: 500; color: var(--text);
+    }
+
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .lead-hero-inner { grid-template-columns: 1fr; }
+      .lead-stats { display: none; }
+      .pilares-preview { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <div class="navbar-bars">
+        <span style="width:5px;height:6px;background:#185FA5;"></span>
+        <span style="width:5px;height:10px;background:#378ADD;"></span>
+        <span style="width:5px;height:15px;background:#85B7EB;"></span>
+      </div>
+      <span class="navbar-wordmark">EVO<em>X</em></span>
+    </a>
+    <div class="navbar-links">
+      <a href="index.html">← Voltar ao início</a>
+    </div>
+  </nav>
+
+  <div class="lead-page">
+
+    <!-- HERO -->
+    <div class="lead-hero">
+      <div class="container">
+        <div class="lead-hero-inner">
+          <div>
+            <div class="badge badge-blue" style="margin-bottom:16px;">Diagnóstico gratuito</div>
+            <h1>Antes de começar,<br>precisamos te <em>conhecer</em></h1>
+            <p>Seus dados são usados apenas para personalizar o resultado e enviar o ebook. Sem spam.</p>
+          </div>
+          <div class="lead-stats">
+            <div class="lead-stat">
+              <span class="lead-stat-num">20</span>
+              <span class="lead-stat-label">perguntas</span>
+            </div>
+            <div class="lead-stat">
+              <span class="lead-stat-num">4</span>
+              <span class="lead-stat-label">pilares avaliados</span>
+            </div>
+            <div class="lead-stat">
+              <span class="lead-stat-num">~10</span>
+              <span class="lead-stat-label">minutos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <div class="lead-body">
+      <div class="lead-form-card fade-up fade-up-1">
+
+        <div class="lead-form-title">Seus dados</div>
+        <div class="lead-form-sub">Preencha para receber o resultado personalizado e o ebook exclusivo.</div>
+
+        <div class="form-error" id="form-error"></div>
+
+        <form id="lead-form" novalidate>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Nome completo *</label>
+              <input class="form-input" type="text" id="nome" placeholder="Seu nome" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">E-mail *</label>
+              <input class="form-input" type="email" id="email" placeholder="email@empresa.com.br" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Empresa *</label>
+              <input class="form-input" type="text" id="empresa" placeholder="Nome da empresa" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tamanho da empresa *</label>
+              <select class="form-select" id="tamanho" required>
+                <option value="">Selecione...</option>
+                <option value="1-10">1 a 10 funcionários</option>
+                <option value="11-50">11 a 50 funcionários</option>
+                <option value="51-200">51 a 200 funcionários</option>
+                <option value="201-500">201 a 500 funcionários</option>
+                <option value="500+">Acima de 500 funcionários</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Cargo</label>
+              <select class="form-select" id="cargo">
+                <option value="">Selecione...</option>
+                <option value="Dono / Sócio">Dono / Sócio</option>
+                <option value="Diretor">Diretor</option>
+                <option value="Gerente">Gerente</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Consultor">Consultor</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Segmento</label>
+              <select class="form-select" id="segmento">
+                <option value="">Selecione...</option>
+                <option value="Indústria">Indústria</option>
+                <option value="Logística">Logística</option>
+                <option value="Serviços">Serviços</option>
+                <option value="Varejo">Varejo</option>
+                <option value="Agronegócio">Agronegócio</option>
+                <option value="Construção Civil">Construção Civil</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+          </div>
+
+          <hr class="form-divider">
+
+          <div style="margin-bottom:20px;">
+            <div class="form-label" style="margin-bottom:12px;">O que será avaliado</div>
+            <div class="pilares-preview">
+              <div class="pilar-preview-item"><div class="pilar-preview-dot"></div><span class="pilar-preview-name">Fundação EXO</span></div>
+              <div class="pilar-preview-item"><div class="pilar-preview-dot" style="background:#378ADD;"></div><span class="pilar-preview-name">Capacidade Produtiva</span></div>
+              <div class="pilar-preview-item"><div class="pilar-preview-dot" style="background:#85B7EB;"></div><span class="pilar-preview-name">Estratégia Operacional</span></div>
+              <div class="pilar-preview-item"><div class="pilar-preview-dot" style="background:#B5D4F4;"></div><span class="pilar-preview-name">Gestão de Indicadores</span></div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary form-submit" id="btn-submit">
+            Iniciar diagnóstico
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+
+          <div class="form-note">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Seus dados são armazenados com segurança e não serão compartilhados.
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('lead-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const nome     = document.getElementById('nome').value.trim();
+      const email    = document.getElementById('email').value.trim();
+      const empresa  = document.getElementById('empresa').value.trim();
+      const tamanho  = document.getElementById('tamanho').value;
+      const cargo    = document.getElementById('cargo').value;
+      const segmento = document.getElementById('segmento').value;
+      const erro     = document.getElementById('form-error');
+      const btn      = document.getElementById('btn-submit');
+
+      // validação básica
+      if (!nome || !email || !empresa || !tamanho) {
+        erro.textContent = 'Preencha todos os campos obrigatórios (*)';
+        erro.style.display = 'block';
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        erro.textContent = 'Digite um e-mail válido.';
+        erro.style.display = 'block';
+        return;
+      }
+      erro.style.display = 'none';
+
+      // salva no localStorage para usar no final
+      localStorage.setItem('evox_lead', JSON.stringify({ nome, email, empresa, tamanho, cargo, segmento }));
+
+      // limpa diagnóstico anterior se existir
+      localStorage.removeItem('evox_respostas');
+      localStorage.removeItem('evox_pilar');
+      localStorage.removeItem('evox_notas');
+      localStorage.removeItem('evox_nota_geral');
+
+      btn.disabled = true;
+      btn.innerHTML = 'Carregando... <span style="opacity:0.6;">aguarde</span>';
+
+      // vai para o diagnóstico
+      setTimeout(() => { window.location.href = 'diagnostico.html'; }, 400);
+    });
+  </script>
+</body>
+</html>
