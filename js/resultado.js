@@ -1,7 +1,7 @@
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
 
-const SUPABASE_URL  = 'SUPABASE_URL_PLACEHOLDER';
-const SUPABASE_ANON = 'SUPABASE_ANON_PLACEHOLDER';
+const SUPABASE_URL  = 'https://xgpdwusicfwvdzlhhovw.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhncGR3dXNpY2Z3dmR6bGhob3Z3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMzYyNjYsImV4cCI6MjA5NDcxMjI2Nn0.P3twaDTYVKLoVAI4Rxojw9xXrHgIdmqhw4YMsWjpilM';
 
 const DB_HEADERS = {
   'Content-Type':  'application/json',
