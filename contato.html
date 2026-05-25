@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contato — EVOX Excelência Operacional</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <style>
+    .contato-page { min-height: 100vh; background: var(--bg); padding-top: 64px; }
+
+    .contato-hero {
+      background: var(--navy); padding: 56px 0 48px;
+      position: relative; overflow: hidden;
+    }
+    .contato-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 50% 80% at 100% 50%, rgba(55,138,221,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .contato-hero-inner {
+      position: relative; z-index: 1;
+    }
+    .contato-hero h1 { color: var(--white); margin-bottom: 12px; }
+    .contato-hero h1 em { font-style: normal; color: var(--accent); }
+    .contato-hero p  { color: rgba(255,255,255,0.5); max-width: 500px; font-size: 1rem; }
+
+    .contato-body { padding: 48px 0 80px; }
+    .contato-grid {
+      display: grid; grid-template-columns: 1fr 1.6fr; gap: 32px;
+      align-items: start;
+    }
+
+    /* ── cards de info ── */
+    .info-cards { display: flex; flex-direction: column; gap: 14px; }
+    .info-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 20px 22px;
+      display: flex; align-items: flex-start; gap: 16px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .info-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .info-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: #EBF3FC; border: 1px solid var(--pale);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .info-icon svg { width: 20px; height: 20px; color: var(--blue); }
+    .info-label {
+      font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700;
+      color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .info-value {
+      font-family: var(--font-ui); font-size: 0.95rem;
+      font-weight: 600; color: var(--text);
+    }
+    .info-sub {
+      font-family: var(--font-ui); font-size: 0.8rem;
+      color: var(--muted); margin-top: 2px;
+    }
+
+    /* card diagnóstico */
+    .diag-card {
+      background: var(--navy); border-radius: var(--radius-lg);
+      padding: 22px; margin-top: 6px;
+      border: 1px solid rgba(181,212,244,0.1);
+    }
+    .diag-card h3 {
+      font-family: var(--font-display); font-size: 1.1rem;
+      font-weight: 700; color: var(--white); margin-bottom: 8px;
+    }
+    .diag-card p {
+      font-size: 0.85rem; color: rgba(255,255,255,0.45);
+      margin-bottom: 16px; line-height: 1.6;
+    }
+
+    /* ── formulário ── */
+    .form-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 36px;
+      box-shadow: var(--shadow);
+    }
+    .form-card-title {
+      font-family: var(--font-display); font-size: 1.5rem;
+      font-weight: 800; color: var(--text); margin-bottom: 4px;
+    }
+    .form-card-sub {
+      font-size: 0.88rem; color: var(--muted); margin-bottom: 28px;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      font-family: var(--font-ui); font-size: 0.73rem; font-weight: 600;
+      color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase;
+    }
+    .form-input, .form-select, .form-textarea {
+      padding: 11px 14px; border: 1.5px solid var(--border);
+      border-radius: 9px; font-family: var(--font-ui);
+      font-size: 0.92rem; color: var(--text); background: var(--white);
+      outline: none; transition: border-color 0.18s, box-shadow 0.18s; width: 100%;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--blue); box-shadow: 0 0 0 3px rgba(24,95,165,0.1);
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: #B0BAC8; }
+    .form-select {
+      cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px;
+    }
+    .form-textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+    .form-divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+    .assunto-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+      margin-bottom: 4px;
+    }
+    .assunto-option { display: none; }
+    .assunto-label {
+      display: flex; align-items: center; justify-content: center;
+      padding: 9px 8px; border-radius: 8px;
+      border: 1.5px solid var(--border); background: var(--white);
+      font-family: var(--font-ui); font-size: 0.8rem; font-weight: 500;
+      color: var(--muted); cursor: pointer; text-align: center;
+      transition: all 0.18s; line-height: 1.3;
+    }
+    .assunto-label:hover { border-color: var(--accent); color: var(--blue); background: #F0F7FF; }
+    .assunto-option:checked + .assunto-label {
+      border-color: var(--blue); background: #EBF4FF; color: var(--deep); font-weight: 600;
+    }
+
+    .form-submit {
+      width: 100%; padding: 15px; font-size: 1rem;
+      border-radius: 10px; justify-content: center; margin-top: 8px;
+    }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+    .form-note {
+      font-family: var(--font-ui); font-size: 0.75rem; color: var(--muted);
+      text-align: center; margin-top: 12px;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .form-error {
+      background: #FEF2F2; border: 1px solid #FECACA; color: #DC2626;
+      border-radius: 8px; padding: 10px 14px; font-size: 0.85rem;
+      margin-bottom: 16px; display: none;
+    }
+    .form-success {
+      background: #F0FDF4; border: 1px solid #BBF7D0; color: #16A34A;
+      border-radius: 8px; padding: 16px; font-size: 0.88rem;
+      margin-bottom: 16px; display: none; text-align: center;
+      font-family: var(--font-ui); font-weight: 500; line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .contato-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .assunto-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-logo">
+      <div class="navbar-bars">
+        <span style="width:5px;height:6px;background:#185FA5;"></span>
+        <span style="width:5px;height:10px;background:#378ADD;"></span>
+        <span style="width:5px;height:15px;background:#85B7EB;"></span>
+      </div>
+      <span class="navbar-wordmark">EVO<em>X</em></span>
+    </a>
+    <div class="navbar-links">
+      <a href="index.html#metodologia">Metodologia</a>
+      <a href="index.html#pilares">Pilares</a>
+      <a href="lead.html">Diagnóstico</a>
+      <a href="contato.html" class="navbar-cta">Falar com especialista</a>
+    </div>
+  </nav>
+
+  <div class="contato-page">
+
+    <!-- HERO -->
+    <div class="contato-hero">
+      <div class="container">
+        <div class="contato-hero-inner">
+          <div class="badge badge-blue" style="margin-bottom:16px;">Fale conosco</div>
+          <h1>Vamos conversar sobre<br>sua <em>operação</em></h1>
+          <p>Preencha o formulário e um especialista EVOX entrará em contato em até 24 horas úteis.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="contato-body">
+      <div class="container">
+        <div class="contato-grid">
+
+          <!-- INFO -->
+          <div>
+            <div class="info-cards">
+
+              <div class="info-card">
+                <div class="info-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div>
+                  <div class="info-label">E-mail</div>
+                  <div class="info-value">pedcaastro@gmail.com</div>
+                  <div class="info-sub">Resposta em até 24h úteis</div>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <div class="info-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+                </div>
+                <div>
+                  <div class="info-label">WhatsApp</div>
+                  <div class="info-value">(34) 9 9780-2004</div>
+                  <div class="info-sub">Seg–Sex, das 8h às 18h</div>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <div class="info-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div>
+                  <div class="info-label">Localização</div>
+                  <div class="info-value">Sertãozinho, SP</div>
+                  <div class="info-sub">Atendimento presencial e remoto</div>
+                </div>
+              </div>
+
+              <div class="info-card">
+                <div class="info-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <div>
+                  <div class="info-label">Primeira reunião</div>
+                  <div class="info-value">Gratuita e sem compromisso</div>
+                  <div class="info-sub">30 minutos para entender seu desafio</div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- card diagnóstico -->
+            <div class="diag-card" style="margin-top:16px;">
+              <h3>Ainda não fez o diagnóstico?</h3>
+              <p>Descubra em qual nível de maturidade operacional sua empresa está — em menos de 10 minutos, gratuitamente.</p>
+              <a href="lead.html" class="btn btn-white" style="font-size:0.88rem;padding:10px 20px;">
+                Fazer diagnóstico gratuito →
+              </a>
+            </div>
+          </div>
+
+          <!-- FORMULÁRIO -->
+          <div class="form-card fade-up fade-up-1">
+            <div class="form-card-title">Envie uma mensagem</div>
+            <div class="form-card-sub">Preencha os campos abaixo e entraremos em contato em breve.</div>
+
+            <div class="form-error"  id="form-error"></div>
+            <div class="form-success" id="form-success">
+              ✓ Mensagem enviada com sucesso!<br>
+              <span style="font-weight:400;">Um especialista EVOX entrará em contato em até 24 horas úteis.</span>
+            </div>
+
+            <form id="contato-form" novalidate>
+              <div class="form-grid">
+
+                <div class="form-group">
+                  <label class="form-label">Nome completo *</label>
+                  <input class="form-input" type="text" id="nome" placeholder="Seu nome" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">E-mail *</label>
+                  <input class="form-input" type="email" id="email" placeholder="email@empresa.com.br" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Empresa *</label>
+                  <input class="form-input" type="text" id="empresa" placeholder="Nome da empresa" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Telefone / WhatsApp</label>
+                  <input class="form-input" type="tel" id="telefone" placeholder="(00) 9 0000-0000">
+                </div>
+
+                <div class="form-group full">
+                  <label class="form-label">Assunto *</label>
+                  <div class="assunto-grid">
+                    <div>
+                      <input class="assunto-option" type="radio" name="assunto" id="a1" value="Diagnóstico operacional">
+                      <label class="assunto-label" for="a1">Diagnóstico operacional</label>
+                    </div>
+                    <div>
+                      <input class="assunto-option" type="radio" name="assunto" id="a2" value="Implementação de OKR">
+                      <label class="assunto-label" for="a2">Implementação de OKR</label>
+                    </div>
+                    <div>
+                      <input class="assunto-option" type="radio" name="assunto" id="a3" value="Estratégia operacional">
+                      <label class="assunto-label" for="a3">Estratégia operacional</label>
+                    </div>
+                    <div>
+                      <input class="assunto-option" type="radio" name="assunto" id="a4" value="Gestão de indicadores">
+                      <label class="assunto-label" for="a4">Gestão de indicadores</label>
+                    </div>
+                    <div>
+                      <input class="assunto-option" type="radio" name="assunto" id="a5" value="Capacidade produtiva">
+                      <label class="assunto-label" for="a5">Capacidade produtiva</label>
+                    </div>
+                    <div>
+                      <input class="assunto-option" type="radio" name="assunto" id="a6" value="Outro">
+                      <label class="assunto-label" for="a6">Outro assunto</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group full">
+                  <label class="form-label">Mensagem *</label>
+                  <textarea class="form-textarea" id="mensagem" placeholder="Conte brevemente qual é o seu principal desafio operacional hoje..." required></textarea>
+                </div>
+
+              </div>
+
+              <hr class="form-divider">
+
+              <button type="submit" class="btn btn-primary form-submit" id="btn-submit">
+                Enviar mensagem
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+
+              <div class="form-note">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                Seus dados são protegidos e não serão compartilhados com terceiros.
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">EVO<em>X</em> <span style="font-family:var(--font-ui);font-size:0.72rem;font-weight:400;color:rgba(255,255,255,0.25);margin-left:10px;letter-spacing:0.1em;">EXCELÊNCIA OPERACIONAL</span></div>
+        <div class="footer-copy">© 2025 EVOX Consultoria · Todos os direitos reservados</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const SUPABASE_URL  = 'https://xgpdwusicfwvdzlhhovw.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhncGR3dXNpY2Z3dmR6bGhob3Z3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMzYyNjYsImV4cCI6MjA5NDcxMjI2Nn0.P3twaDTYVKLoVAI4Rxojw9xXrHgIdmqhw4YMsWjpilM';
+
+    document.getElementById('contato-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const nome      = document.getElementById('nome').value.trim();
+      const email     = document.getElementById('email').value.trim();
+      const empresa   = document.getElementById('empresa').value.trim();
+      const telefone  = document.getElementById('telefone').value.trim();
+      const mensagem  = document.getElementById('mensagem').value.trim();
+      const assunto   = document.querySelector('input[name="assunto"]:checked');
+      const erro      = document.getElementById('form-error');
+      const sucesso   = document.getElementById('form-success');
+      const btn       = document.getElementById('btn-submit');
+
+      // validação
+      erro.style.display = 'none';
+      if (!nome || !email || !empresa || !mensagem) {
+        erro.textContent = 'Preencha todos os campos obrigatórios (*).';
+        erro.style.display = 'block'; return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        erro.textContent = 'Digite um e-mail válido.';
+        erro.style.display = 'block'; return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = 'Enviando...';
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/contatos`, {
+          method: 'POST',
+          headers: {
+            'Content-Type':  'application/json',
+            'apikey':        SUPABASE_ANON,
+            'Authorization': `Bearer ${SUPABASE_ANON}`,
+            'Prefer':        'return=minimal'
+          },
+          body: JSON.stringify({
+            nome, email, empresa,
+            telefone:  telefone  || null,
+            assunto:   assunto ? assunto.value : null,
+            mensagem
+          })
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+
+        // sucesso
+        document.getElementById('contato-form').style.display = 'none';
+        sucesso.style.display = 'block';
+
+      } catch (err) {
+        console.error(err);
+        erro.textContent = 'Erro ao enviar. Tente novamente ou entre em contato pelo WhatsApp.';
+        erro.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = 'Enviar mensagem <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
+      }
+    });
+  </script>
+
+</body>
+</html>
