@@ -1,0 +1,11 @@
+{
+  "name": "evox-site",
+  "version": "1.0.0",
+  "description": "EVOX — Diagnóstico de Maturidade Operacional",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

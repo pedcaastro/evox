@@ -1,7 +1,7 @@
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
 
-const SUPABASE_URL  = 'https://xgpdwusicfwvdzlhhovw.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhncGR3dXNpY2Z3dmR6bGhob3Z3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMzYyNjYsImV4cCI6MjA5NDcxMjI2Nn0.P3twaDTYVKLoVAI4Rxojw9xXrHgIdmqhw4YMsWjpilM';
+const SUPABASE_URL  = 'SUPABASE_URL_PLACEHOLDER';
+const SUPABASE_ANON = 'SUPABASE_ANON_PLACEHOLDER';
 
 const DB_HEADERS = {
   'Content-Type':  'application/json',
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const leadId       = localStorage.getItem('evox_lead_id');
   const respostasRaw = JSON.parse(localStorage.getItem('evox_respostas')  || '{}');
 
-  if (!Object.keys(notas).length) { window.location.href = 'lead.html'; return; }
+  if (!Object.keys(notas).length) { window.location.href = '/iniciar'; return; }
 
   renderResultado(notas, notaGeral, lead);
   renderRadar(notas);

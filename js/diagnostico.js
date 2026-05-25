@@ -415,5 +415,5 @@ function calcularEIrParaResultado() {
   localStorage.setItem('evox_notas', JSON.stringify(notas));
   localStorage.setItem('evox_nota_geral', notaGeral);
 
-  window.location.href = 'resultado.html';
+  window.location.href = '/panorama';
 }
