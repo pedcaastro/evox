@@ -10,7 +10,7 @@ const PILARES = [
       {
         texto: 'Sua empresa possui um planejamento estratégico formal, com objetivos definidos para o ano?',
         opcoes: [
-          'Não temos nenhum planejamento documentado — decisões são tomadas conforme surgem',
+          'Não temos nenhum planejamento documentado  decisões são tomadas conforme surgem',
           'Temos algumas diretrizes na cabeça da liderança, mas nada formalizado',
           'Existe um planejamento básico, mas não é acompanhado com regularidade',
           'Temos planejamento documentado, revisado ao menos uma vez por ano com a equipe',
@@ -22,13 +22,13 @@ const PILARES = [
         opcoes: [
           'Nunca ouvi falar ou nunca aplicamos nada parecido',
           'Já ouvi falar, mas não implementamos',
-          'Tentamos implementar, mas não sustentamos — caiu no esquecimento',
+          'Tentamos implementar, mas não sustentamos  caiu no esquecimento',
           'Usamos OKR em algumas áreas, com acompanhamento parcial',
           'OKR implementado em toda a empresa, com ciclos definidos e revisões regulares'
         ]
       },
       {
-        texto: 'As metas da empresa são desdobradas até o nível operacional — equipes e colaboradores sabem o que precisam entregar?',
+        texto: 'As metas da empresa são desdobradas até o nível operacional  equipes e colaboradores sabem o que precisam entregar?',
         opcoes: [
           'As metas ficam só na alta liderança, o chão de fábrica não sabe o que está sendo buscado',
           'Alguns gestores repassam informalmente, mas sem padrão',
@@ -66,7 +66,7 @@ const PILARES = [
     icon: '⚙️',
     perguntas: [
       {
-        texto: 'Você sabe qual é a capacidade máxima de produção da sua operação hoje — por turno, linha ou célula?',
+        texto: 'Você sabe qual é a capacidade máxima de produção da sua operação hoje  por turno, linha ou célula?',
         opcoes: [
           'Não temos esse número mapeado',
           'Estimamos com base na experiência, mas sem dado formal',
@@ -98,7 +98,7 @@ const PILARES = [
       {
         texto: 'Como você avalia o nível de ociosidade ou desperdício de capacidade na sua operação?',
         opcoes: [
-          'Não medimos — não sabemos quanto estamos desperdiçando',
+          'Não medimos  não sabemos quanto estamos desperdiçando',
           'Sabemos que existe desperdício, mas não quantificamos',
           'Medimos em algumas áreas, sem visão consolidada',
           'OEE ou indicador similar monitorado, com ações corretivas em curso',
@@ -124,7 +124,7 @@ const PILARES = [
     icon: '📋',
     perguntas: [
       {
-        texto: 'Sua empresa já realizou um diagnóstico operacional formal — mapeando como os processos realmente funcionam hoje?',
+        texto: 'Sua empresa já realizou um diagnóstico operacional formal  mapeando como os processos realmente funcionam hoje?',
         opcoes: [
           'Nunca fizemos nenhum tipo de diagnóstico estruturado',
           'Já conversamos sobre isso, mas nunca formalizamos',
@@ -136,7 +136,7 @@ const PILARES = [
       {
         texto: 'Os processos críticos da sua operação estão documentados em SOP ou POP (procedimentos operacionais padrão)?',
         opcoes: [
-          'Nada documentado — o conhecimento está na cabeça das pessoas',
+          'Nada documentado  o conhecimento está na cabeça das pessoas',
           'Alguns processos têm anotações informais, sem padrão definido',
           'Temos alguns procedimentos documentados, mas incompletos ou desatualizados',
           'Processos críticos documentados, acessíveis às equipes',
@@ -154,9 +154,9 @@ const PILARES = [
         ]
       },
       {
-        texto: 'Os processos da sua empresa são monitorados ativamente — existe alguém responsável por garantir que os padrões estão sendo seguidos?',
+        texto: 'Os processos da sua empresa são monitorados ativamente  existe alguém responsável por garantir que os padrões estão sendo seguidos?',
         opcoes: [
-          'Não há monitoramento — só sabemos que algo está errado quando o problema aparece',
+          'Não há monitoramento  só sabemos que algo está errado quando o problema aparece',
           'O gestor observa informalmente, sem registro',
           'Fazemos auditorias esporádicas, sem frequência definida',
           'Existe responsável pelo monitoramento com frequência regular e registro de desvios',
@@ -164,13 +164,13 @@ const PILARES = [
         ]
       },
       {
-        texto: 'Existe uma cultura de melhoria contínua na sua empresa — as equipes identificam e propõem melhorias nos processos?',
+        texto: 'Existe uma cultura de melhoria contínua na sua empresa  as equipes identificam e propõem melhorias nos processos?',
         opcoes: [
-          'Não existe esse hábito — as pessoas executam e não questionam',
+          'Não existe esse hábito  as pessoas executam e não questionam',
           'Algumas pessoas sugerem melhorias, mas de forma isolada e sem canal formal',
           'Temos iniciativas pontuais de melhoria, mas sem metodologia ou continuidade',
           'Canal aberto para sugestões, com análise e resposta pela liderança',
-          'Cultura Kaizen estabelecida — times engajados, ciclos PDCA rodando e melhorias registradas com impacto medido'
+          'Cultura Kaizen estabelecida  times engajados, ciclos PDCA rodando e melhorias registradas com impacto medido'
         ]
       }
     ]
