@@ -1,35 +1,20 @@
 {
-  "outputDirectory": ".",
-  "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/",           "destination": "/index.html"      },
-    { "source": "/iniciar",    "destination": "/lead.html"       },
-    { "source": "/avaliacao",  "destination": "/diagnostico.html"},
-    { "source": "/panorama",   "destination": "/resultado.html"  },
-    { "source": "/contato",    "destination": "/contato.html"    }
-  ],
-  "redirects": [
-    { "source": "/lead",        "destination": "/iniciar",  "permanent": true },
-    { "source": "/diagnostico", "destination": "/avaliacao","permanent": true },
-    { "source": "/resultado",   "destination": "/panorama", "permanent": true }
+    { "source": "/iniciar",   "destination": "/lead.html"        },
+    { "source": "/avaliacao", "destination": "/diagnostico.html" },
+    { "source": "/panorama",  "destination": "/resultado.html"   },
+    { "source": "/contato",   "destination": "/contato.html"     }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options",            "value": "nosniff"          },
-        { "key": "X-Frame-Options",                   "value": "DENY"             },
-        { "key": "X-XSS-Protection",                  "value": "1; mode=block"    },
-        { "key": "Referrer-Policy",                   "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy",                "value": "camera=(), microphone=(), geolocation=()" },
-        { "key": "Strict-Transport-Security",         "value": "max-age=63072000; includeSubDomains; preload" }
-      ]
-    },
-    {
-      "source": "/js/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-store" }
+        { "key": "X-Content-Type-Options", "value": "nosniff"                       },
+        { "key": "X-Frame-Options",        "value": "DENY"                          },
+        { "key": "X-XSS-Protection",       "value": "1; mode=block"                 },
+        { "key": "Referrer-Policy",        "value": "strict-origin-when-cross-origin" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
       ]
     }
   ]
