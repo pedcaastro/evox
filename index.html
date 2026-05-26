@@ -21,13 +21,140 @@
       <span class="navbar-wordmark">EVO<em>X</em></span>
     </a>
     <div class="navbar-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
       <a href="#metodologia">Metodologia</a>
-      <a href="#pilares">Pilares</a>
-      <a href="#diagnostico">Diagnóstico</a>
       <a href="/contato">Contato</a>
       <a href="/iniciar" class="navbar-cta">Fazer diagnóstico</a>
     </div>
+    <button class="navbar-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MENU MOBILE -->
+  <div class="navbar-mobile-menu" id="mobile-menu">
+    <a href="#sobre"        onclick="closeMenu()">Sobre</a>
+    <a href="#servicos"     onclick="closeMenu()">Serviços</a>
+    <a href="#metodologia"  onclick="closeMenu()">Metodologia</a>
+    <a href="/contato"      onclick="closeMenu()">Contato</a>
+    <a href="/iniciar" class="mobile-cta">Fazer diagnóstico</a>
+  </div>
+
+  <!-- SOBRE -->
+  <section class="section" id="sobre" style="background:var(--bg); padding-top: 96px;">
+    <div class="container">
+      <div class="sobre-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+        <div>
+          <div class="section-eyebrow">Quem somos</div>
+          <h2 class="section-title">Transformamos operações em vantagens competitivas</h2>
+          <p style="margin-bottom:16px;">
+            A EVOX é uma consultoria especializada em excelência operacional. Atuamos ao lado de donos, gestores e diretores industriais para estruturar, padronizar e elevar o nível de maturidade das operações.
+          </p>
+          <p style="margin-bottom:28px;">
+            Nossa abordagem é prática e orientada a resultados. Não entregamos relatórios engavetados. Entregamos processos funcionando, indicadores sendo medidos e equipes alinhadas com a estratégia.
+          </p>
+          <a href="/contato" class="btn btn-primary">
+            Fale com um especialista
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;display:flex;align-items:center;gap:16px;">
+            <div style="width:44px;height:44px;border-radius:10px;background:#EBF3FC;border:1px solid var(--pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div>
+              <div style="font-family:var(--font-ui);font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:2px;">Foco no dono e na liderança</div>
+              <div style="font-size:0.83rem;color:var(--muted);">Trabalhamos com quem decide e opera. Sem intermediários.</div>
+            </div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;display:flex;align-items:center;gap:16px;">
+            <div style="width:44px;height:44px;border-radius:10px;background:#EBF3FC;border:1px solid var(--pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <div style="font-family:var(--font-ui);font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:2px;">Metodologia própria</div>
+              <div style="font-size:0.83rem;color:var(--muted);">A Metodologia Comparacional EXO avalia e posiciona sua operação no mercado.</div>
+            </div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;display:flex;align-items:center;gap:16px;">
+            <div style="width:44px;height:44px;border-radius:10px;background:#EBF3FC;border:1px solid var(--pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div>
+              <div style="font-family:var(--font-ui);font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:2px;">Resultado mensurável</div>
+              <div style="font-size:0.83rem;color:var(--muted);">Cada entrega tem indicador. Você acompanha a evolução em tempo real.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section class="section" id="servicos">
+    <div class="container">
+      <div class="section-eyebrow">Nossos serviços</div>
+      <h2 class="section-title">O que a EVOX faz pela sua operação</h2>
+      <p class="section-sub">Atuamos em cinco frentes complementares. Cada uma resolve uma camada específica da operação, do planejamento ao chão de fábrica.</p>
+
+      <div class="servicos-grid" style="display:grid; grid-template-columns: repeat(3,1fr); gap:16px;">
+
+        <div style="background:var(--navy);border-radius:var(--radius-lg);padding:28px;border:1px solid rgba(181,212,244,0.08);">
+          <div style="width:40px;height:40px;border-radius:9px;background:rgba(55,138,221,0.15);border:1px solid rgba(133,183,235,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#85B7EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <div style="font-family:var(--font-ui);font-size:0.7rem;font-weight:700;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Fundação EXO</div>
+          <h3 style="font-size:1rem;color:var(--white);margin-bottom:8px;line-height:1.3;">Planejamento estratégico e OKR</h3>
+          <p style="font-size:0.83rem;color:rgba(255,255,255,0.45);line-height:1.6;">Estruturamos o planejamento estratégico, definimos OKRs, desdobramos metas até o operacional e implantamos o Comitê de Resultados.</p>
+        </div>
+
+        <div style="background:var(--navy);border-radius:var(--radius-lg);padding:28px;border:1px solid rgba(181,212,244,0.08);">
+          <div style="width:40px;height:40px;border-radius:9px;background:rgba(55,138,221,0.15);border:1px solid rgba(133,183,235,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#85B7EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
+          </div>
+          <div style="font-family:var(--font-ui);font-size:0.7rem;font-weight:700;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Capacity</div>
+          <h3 style="font-size:1rem;color:var(--white);margin-bottom:8px;line-height:1.3;">Capacidade Produtiva</h3>
+          <p style="font-size:0.83rem;color:rgba(255,255,255,0.45);line-height:1.6;">Mapeamos a capacidade instalada, identificamos gargalos, estruturamos o planejamento de demanda e dimensionamos turnos e equipes.</p>
+        </div>
+
+        <div style="background:var(--navy);border-radius:var(--radius-lg);padding:28px;border:1px solid rgba(181,212,244,0.08);">
+          <div style="width:40px;height:40px;border-radius:9px;background:rgba(55,138,221,0.15);border:1px solid rgba(133,183,235,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#85B7EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div style="font-family:var(--font-ui);font-size:0.7rem;font-weight:700;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Estratégia Operacional</div>
+          <h3 style="font-size:1rem;color:var(--white);margin-bottom:8px;line-height:1.3;">Processos e padronização</h3>
+          <p style="font-size:0.83rem;color:rgba(255,255,255,0.45);line-height:1.6;">Diagnosticamos a operação, documentamos SOPs e POPs, implantamos processos e construímos a cultura de melhoria contínua.</p>
+        </div>
+
+        <div style="background:var(--navy);border-radius:var(--radius-lg);padding:28px;border:1px solid rgba(181,212,244,0.08);">
+          <div style="width:40px;height:40px;border-radius:9px;background:rgba(55,138,221,0.15);border:1px solid rgba(133,183,235,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#85B7EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div style="font-family:var(--font-ui);font-size:0.7rem;font-weight:700;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Indicadores</div>
+          <h3 style="font-size:1rem;color:var(--white);margin-bottom:8px;line-height:1.3;">Gestão de KPIs e análise crítica</h3>
+          <p style="font-size:0.83rem;color:rgba(255,255,255,0.45);line-height:1.6;">Definimos e implementamos KPIs, criamos painéis de gestão à vista, estruturamos análises críticas e aplicamos FCA nos desvios.</p>
+        </div>
+
+        <div style="background:var(--navy);border-radius:var(--radius-lg);padding:28px;border:1px solid rgba(181,212,244,0.08);">
+          <div style="width:40px;height:40px;border-radius:9px;background:rgba(55,138,221,0.15);border:1px solid rgba(133,183,235,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#85B7EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div style="font-family:var(--font-ui);font-size:0.7rem;font-weight:700;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Maturidade EXO</div>
+          <h3 style="font-size:1rem;color:var(--white);margin-bottom:8px;line-height:1.3;">Avaliação Sazional de Maturidade</h3>
+          <p style="font-size:0.83rem;color:rgba(255,255,255,0.45);line-height:1.6;">Avaliação periódica e estruturada da maturidade operacional da empresa, com comparativo de evolução entre ciclos e plano de ação prioritário.</p>
+        </div>
+
+        <div style="background:var(--bg);border:1.5px dashed var(--border);border-radius:var(--radius-lg);padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;">
+          <div style="font-family:var(--font-ui);font-size:0.85rem;font-weight:600;color:var(--muted);">Não sabe por onde começar?</div>
+          <p style="font-size:0.83rem;color:var(--muted);line-height:1.5;margin:0;">Faça o diagnóstico gratuito e descubra qual serviço faz mais sentido para o momento da sua operação.</p>
+          <a href="/iniciar" class="btn btn-primary" style="font-size:0.85rem;padding:10px 20px;margin-top:4px;">Fazer diagnóstico →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
   <!-- HERO -->
   <section class="hero">
@@ -157,6 +284,137 @@
     </div>
   </section>
 
+  <!-- EMPRESAS -->
+  <section class="section" style="background:var(--bg);">
+    <div class="container">
+      <div class="section-eyebrow">Empresas que confiam na EVOX</div>
+      <h2 class="section-title">Operações que já evoluíram com a gente</h2>
+      <p class="section-sub">Empresas de diferentes segmentos que passaram pelo diagnóstico e estruturaram sua operação com a metodologia EVOX.</p>
+
+      <!-- carrossel dentro do container -->
+      <div class="carousel-wrap">
+        <div class="carousel-track" id="carousel-track">
+
+          <div class="empresa-card">
+            <div class="empresa-logo-box">
+              <div class="empresa-logo-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+            </div>
+            <div class="empresa-info">
+              <div class="empresa-nome">Empresa 01</div>
+              <div class="empresa-setor">Indústria alimentícia</div>
+              <div class="empresa-desc">Estruturação de processos, implantação de OKR e gestão de indicadores operacionais.</div>
+            </div>
+          </div>
+
+          <div class="empresa-card">
+            <div class="empresa-logo-box">
+              <div class="empresa-logo-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+            </div>
+            <div class="empresa-info">
+              <div class="empresa-nome">Empresa 02</div>
+              <div class="empresa-setor">Logística e distribuição</div>
+              <div class="empresa-desc">Diagnóstico operacional completo e reestruturação da capacidade produtiva por turno.</div>
+            </div>
+          </div>
+
+          <div class="empresa-card">
+            <div class="empresa-logo-box">
+              <div class="empresa-logo-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+            </div>
+            <div class="empresa-info">
+              <div class="empresa-nome">Empresa 03</div>
+              <div class="empresa-setor">Metalurgia</div>
+              <div class="empresa-desc">Implantação de SOPs, painéis de gestão à vista e cultura de melhoria contínua.</div>
+            </div>
+          </div>
+
+          <div class="empresa-card">
+            <div class="empresa-logo-box">
+              <div class="empresa-logo-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+            </div>
+            <div class="empresa-info">
+              <div class="empresa-nome">Empresa 04</div>
+              <div class="empresa-setor">Agronegócio</div>
+              <div class="empresa-desc">Planejamento estratégico e desdobramento de metas do corporativo ao operacional.</div>
+            </div>
+          </div>
+
+          <div class="empresa-card">
+            <div class="empresa-logo-box">
+              <div class="empresa-logo-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+            </div>
+            <div class="empresa-info">
+              <div class="empresa-nome">Empresa 05</div>
+              <div class="empresa-setor">Construção civil</div>
+              <div class="empresa-desc">Estruturação de KPIs, análises críticas mensais e tratamento de desvios com FCA.</div>
+            </div>
+          </div>
+
+          <div class="empresa-card">
+            <div class="empresa-logo-box">
+              <div class="empresa-logo-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+            </div>
+            <div class="empresa-info">
+              <div class="empresa-nome">Empresa 06</div>
+              <div class="empresa-setor">Serviços industriais</div>
+              <div class="empresa-desc">Avaliação sazional de maturidade e plano de evolução operacional por ciclos.</div>
+            </div>
+          </div>
+
+          <div class="empresa-card">
+            <div class="empresa-logo-box">
+              <div class="empresa-logo-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+            </div>
+            <div class="empresa-info">
+              <div class="empresa-nome">Empresa 07</div>
+              <div class="empresa-setor">Varejo e distribuição</div>
+              <div class="empresa-desc">Reestruturação do planejamento de demanda e eliminação de gargalos no centro de distribuição.</div>
+            </div>
+          </div>
+
+          <div class="empresa-card">
+            <div class="empresa-logo-box">
+              <div class="empresa-logo-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+            </div>
+            <div class="empresa-info">
+              <div class="empresa-nome">Empresa 08</div>
+              <div class="empresa-setor">Plásticos e embalagens</div>
+              <div class="empresa-desc">Implantação completa da Metodologia Comparacional EXO com evolução de nível 2 para 4.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="carousel-prev" aria-label="Anterior">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <div class="carousel-dots" id="carousel-dots"></div>
+          <button class="carousel-btn" id="carousel-next" aria-label="Próximo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="cta-section" id="diagnostico">
     <div class="container">
@@ -184,10 +442,10 @@
   </footer>
 
   <script>
-    // Hero visual animado
+    // ── Hero visual animado ──
     const exemplos = [
-      { nome: 'Fundação EXO',         val: 3.6, pct: 72 },
-      { nome: 'Capacidade Produtiva', val: 2.2, pct: 44 },
+      { nome: 'Fundação EXO',           val: 3.6, pct: 72 },
+      { nome: 'Capacidade Produtiva',   val: 2.2, pct: 44 },
       { nome: 'Estratégia Operacional', val: 2.8, pct: 56 },
       { nome: 'Gestão de Indicadores',  val: 1.8, pct: 36 },
     ];
@@ -212,6 +470,84 @@
         b.style.width = b.dataset.pct + '%';
       });
     }, 400);
+
+    // ── Menu hamburguer ──
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }
+
+    // fecha ao clicar fora
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    // ── Carrossel de empresas ──
+    (function() {
+      const cards    = Array.from(document.querySelectorAll('.empresa-card'));
+      const dotsWrap = document.getElementById('carousel-dots');
+      const btnPrev  = document.getElementById('carousel-prev');
+      const btnNext  = document.getElementById('carousel-next');
+      let current    = 0;
+
+      function getPerPage() {
+        if (window.innerWidth <= 480) return 1;
+        if (window.innerWidth <= 768) return 2;
+        if (window.innerWidth <= 1024) return 3;
+        return 4;
+      }
+
+      function getTotal() { return Math.ceil(cards.length / getPerPage()); }
+
+      function buildDots() {
+        dotsWrap.innerHTML = '';
+        for (let i = 0; i < getTotal(); i++) {
+          const dot = document.createElement('div');
+          dot.className = 'carousel-dot' + (i === current ? ' active' : '');
+          dot.addEventListener('click', () => goTo(i));
+          dotsWrap.appendChild(dot);
+        }
+      }
+
+      function render() {
+        const perPage = getPerPage();
+        const start   = current * perPage;
+        cards.forEach((c, i) => c.classList.toggle('visible', i >= start && i < start + perPage));
+        dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+      }
+
+      function goTo(idx) {
+        const total = getTotal();
+        // navegação circular — volta ao início ou vai ao final
+        current = ((idx % total) + total) % total;
+        render();
+      }
+
+      btnPrev.addEventListener('click', () => goTo(current - 1));
+      btnNext.addEventListener('click', () => goTo(current + 1));
+
+      window.addEventListener('resize', () => { current = 0; buildDots(); render(); });
+
+      // autoplay circular
+      let autoplay = setInterval(() => goTo(current + 1), 4000);
+      document.getElementById('carousel-track').addEventListener('mouseenter', () => clearInterval(autoplay));
+      document.getElementById('carousel-track').addEventListener('mouseleave', () => {
+        autoplay = setInterval(() => goTo(current + 1), 4000);
+      });
+
+      buildDots();
+      render();
+    })();
   </script>
 </body>
 </html>
