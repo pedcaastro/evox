@@ -59,15 +59,31 @@
           </div>
 
           <!-- radar -->
-          <div class="radar-wrap" style="min-width:300px;">
-            <h3>Visão geral</h3>
+          <div class="radar-wrap" style="min-width:340px;">
+            <h3>Você x mercado</h3>
             <canvas id="radar-canvas"></canvas>
+            <div class="radar-legend">
+              <span class="rl-item"><i class="rl-dot" style="background:#185FA5;"></i>Sua empresa</span>
+              <span class="rl-item"><i class="rl-dot" style="background:#CA8A04;"></i>Média do seu setor</span>
+              <span class="rl-item"><i class="rl-dot" style="background:#16A34A;"></i>Melhor do mercado</span>
+            </div>
           </div>
 
         </div>
 
-        <!-- EBOOK -->
-        <div class="section-eyebrow" style="margin-bottom:16px;">Seu material exclusivo</div>
+        <!-- MICRO INSIGHT (gera desejo) -->
+        <div class="insight-card" id="insight-card">
+          <div class="insight-tag">Leitura do diagnóstico</div>
+          <p class="insight-text" id="insight-text"></p>
+          <div class="insight-gap" id="insight-gap"></div>
+        </div>
+
+        <!-- MACRO PLANO DE AÇÃO -->
+        <div class="section-eyebrow" style="margin:32px 0 16px;">Seu macro plano de ação</div>
+        <div class="macro-plan" id="macro-plan"></div>
+
+        <!-- PDF DE VENDA (com captura de lead) -->
+        <div class="section-eyebrow" style="margin:32px 0 16px;">Plano completo</div>
         <div class="ebook-card">
           <div class="ebook-cover">
             <div class="ebook-cover-bars">
@@ -75,16 +91,16 @@
               <span style="width:7px;height:15px;background:#378ADD;"></span>
               <span style="width:7px;height:22px;background:#85B7EB;"></span>
             </div>
-            <div class="ebook-cover-label">EVOX<br>GUIA</div>
+            <div class="ebook-cover-label">EVOX<br>PLANO</div>
           </div>
           <div class="ebook-text" style="flex:1;">
-            <h3>Guia prático de excelência operacional — do diagnóstico à transformação</h3>
-            <p>Baseado no seu resultado, preparamos este material com frameworks, checklists e estudos de caso para acelerar sua evolução operacional.</p>
+            <h3>Plano de transformação operacional sob medida para o seu resultado</h3>
+            <p>Receba o documento completo com o diagnóstico detalhado, o caminho de evolução pilar a pilar e a estimativa de ganho que está deixando na mesa hoje. Preencha para liberar o download na hora.</p>
             <form class="ebook-form" id="ebook-form">
               <input type="text"  id="ebook-nome"  placeholder="Seu nome" required autocomplete="name">
               <input type="email" id="ebook-email" placeholder="Seu melhor e-mail" required autocomplete="email">
               <button type="submit" class="btn btn-primary" style="white-space:nowrap;">
-                Baixar ebook gratuito
+                Receber meu plano
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               </button>
             </form>
@@ -94,10 +110,10 @@
         <!-- CTA consulta -->
         <div style="margin-top:24px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
           <div>
-            <h3 style="font-size:1.1rem;color:var(--text);margin-bottom:6px;">Quer entender o que fazer a partir daqui?</h3>
-            <p style="font-size:0.88rem;margin:0;">Converse com um especialista EVOX e descubra o caminho mais rápido para evoluir sua operação.</p>
+            <h3 style="font-size:1.1rem;color:var(--text);margin-bottom:6px;">Quer encurtar o caminho até o resultado?</h3>
+            <p style="font-size:0.88rem;margin:0;">Converse com um especialista EVOX e transforme esse diagnóstico em um plano executado, com ganho medido em reais.</p>
           </div>
-          <a href="mailto:contato@evox.com.br" class="btn btn-primary">
+          <a href="/contato" class="btn btn-primary">
             Falar com especialista →
           </a>
         </div>

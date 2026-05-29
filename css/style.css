@@ -430,6 +430,21 @@ a { text-decoration: none; color: inherit; }
 .option-label.selected .option-score { background: var(--pale); color: var(--deep); }
 .option-text { font-size: 0.9rem; color: var(--muted); line-height: 1.45; }
 
+/* opção N/A — separada visualmente da escala 0-4 */
+.option-label.option-na {
+  margin-top: 8px; border-style: dashed; border-color: #CBD5E1;
+  background: #FAFBFC;
+}
+.option-label.option-na:hover { border-color: var(--muted); background: #F4F6F8; }
+.option-label.option-na .option-score {
+  background: #E2E8F0; color: #475569; font-size: 0.66rem; letter-spacing: 0.02em;
+}
+.option-label.option-na.selected {
+  border-style: solid; border-color: #64748B; background: #EEF1F5;
+}
+.option-label.option-na.selected .option-indicator { border-color: #64748B; background: #64748B; }
+.option-label.option-na.selected .option-score { background: #64748B; color: #fff; }
+
 /* nav botões */
 .diag-nav {
   display: flex; align-items: center; justify-content: space-between;
@@ -672,3 +687,94 @@ a { text-decoration: none; color: inherit; }
 .fade-up-2 { animation-delay: 0.2s; opacity: 0; }
 .fade-up-3 { animation-delay: 0.3s; opacity: 0; }
 .fade-up-4 { animation-delay: 0.4s; opacity: 0; }
+
+/* ─── RADAR LEGENDA ─── */
+.radar-legend {
+  display: flex; flex-direction: column; gap: 7px;
+  margin-top: 14px; align-items: flex-start;
+}
+.rl-item {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-ui); font-size: 0.78rem; color: var(--muted);
+}
+.rl-dot { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+/* ─── MICRO INSIGHT ─── */
+.insight-card {
+  background: linear-gradient(135deg, #042C53, #0C447C);
+  border-radius: var(--radius-lg); padding: 28px 30px;
+  position: relative; overflow: hidden; margin-top: 8px;
+}
+.insight-card::before {
+  content: ''; position: absolute; top: -40%; right: -10%;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(55,138,221,0.25), transparent 70%);
+  pointer-events: none;
+}
+.insight-tag {
+  font-family: var(--font-ui); font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--light);
+  margin-bottom: 12px; position: relative;
+}
+.insight-text {
+  font-family: var(--font-body); font-size: 1.06rem; line-height: 1.65;
+  color: rgba(255,255,255,0.88); margin: 0 0 18px; position: relative;
+}
+.insight-text strong { color: #fff; font-weight: 700; }
+.insight-gap { position: relative; }
+.gap-row { display: flex; flex-direction: column; gap: 10px; }
+.gap-label {
+  font-family: var(--font-ui); font-size: 0.74rem; font-weight: 600;
+  color: var(--light); letter-spacing: 0.04em;
+}
+.gap-bars { display: flex; flex-direction: column; gap: 7px; }
+.gap-bar {
+  position: relative; height: 24px; border-radius: 6px;
+  background: rgba(255,255,255,0.07); overflow: hidden;
+  display: flex; align-items: center;
+}
+.gap-bar span {
+  position: absolute; left: 0; top: 0; height: 100%;
+  border-radius: 6px; transition: width 1s cubic-bezier(.2,.8,.2,1);
+}
+.gap-bar b {
+  position: relative; z-index: 2; font-family: var(--font-ui);
+  font-size: 0.7rem; font-weight: 600; color: #fff;
+  padding-left: 10px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* ─── MACRO PLANO ─── */
+.macro-plan { display: flex; flex-direction: column; gap: 12px; }
+.macro-item {
+  display: flex; gap: 16px; background: var(--white);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 22px 24px; transition: box-shadow 0.2s, transform 0.2s;
+}
+.macro-item:hover { box-shadow: var(--shadow-sm, 0 6px 20px -8px rgba(4,44,83,.2)); transform: translateY(-2px); }
+.macro-step {
+  width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
+  background: linear-gradient(145deg, var(--blue), var(--accent));
+  color: #fff; font-family: var(--font-display); font-size: 1.3rem;
+  font-weight: 800; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 14px -6px rgba(24,95,165,0.6);
+}
+.macro-content { flex: 1; }
+.macro-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+.macro-pilar {
+  font-family: var(--font-ui); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue);
+}
+.macro-prio {
+  font-family: var(--font-ui); font-size: 0.64rem; font-weight: 600;
+  color: var(--muted); background: var(--bg); padding: 2px 9px;
+  border-radius: 20px; border: 1px solid var(--border);
+}
+.macro-content h4 {
+  font-family: var(--font-display); font-size: 1.18rem; font-weight: 700;
+  color: var(--text); margin: 0 0 7px;
+}
+.macro-acao { font-size: 0.92rem; color: var(--muted); margin: 0 0 8px; line-height: 1.5; }
+.macro-ganho {
+  font-size: 0.88rem; color: var(--blue); margin: 0; line-height: 1.5;
+  font-weight: 500; padding-left: 12px; border-left: 3px solid var(--pale);
+}

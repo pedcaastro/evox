@@ -85,6 +85,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   renderResultado(notas, notaGeral, lead);
   renderRadar(notas);
+  renderInsight(notas, notaGeral);
+  renderMacroPlano(notas);
   setupEbookForm(lead);
 
   // ── POST 2: salva notas + respostas detalhadas usando o lead_id já criado ──
@@ -114,14 +116,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       PILARES_DATA.forEach(pilar => {
         pilar.perguntas.forEach((pergunta, qIdx) => {
           const key       = `${pilar.id}_${qIdx}`;
-          const pontuacao = respostasRaw[key] !== undefined ? respostasRaw[key] : 0;
+          const valBruto  = respostasRaw[key];
+          const isNA      = valBruto === 'na';
+          const pontuacao = (valBruto !== undefined && !isNA) ? valBruto : 0;
           linhas.push({
             lead_id:      leadId,
             pilar:        pilar.nome,
             pergunta_num: qIdx + 1,
             pergunta:     pergunta.texto,
-            resposta:     pergunta.opcoes[pontuacao],
-            pontuacao:    pontuacao
+            resposta:     isNA ? 'Não se aplica (N/A)' : pergunta.opcoes[pontuacao],
+            pontuacao:    isNA ? null : pontuacao
           });
         });
       });
@@ -192,19 +196,125 @@ function getNivel(nota) {
   return NIVEIS.find(n => nota >= n.min && nota <= n.max) || NIVEIS[0];
 }
 
+// ─── MICRO INSIGHT (gera desejo) ──────────────────────────────────────────────
+
+function renderInsight(notas, notaGeral) {
+  const card = document.getElementById('insight-card');
+  const txt  = document.getElementById('insight-text');
+  const gap  = document.getElementById('insight-gap');
+  if (!txt) return;
+
+  // identifica o pilar mais fraco
+  const entradas = Object.entries(notas);
+  entradas.sort((a, b) => a[1] - b[1]);
+  const [idFraco, notaFraco] = entradas[0];
+  const nomeFraco = PILARES_NOMES[idFraco];
+
+  // gap até a média do setor e até a melhor do mercado
+  const gapSetor   = (BENCH_SETOR[idFraco]   - notaFraco).toFixed(1).replace('.', ',');
+  const gapMercado = (BENCH_MERCADO[idFraco] - notaFraco).toFixed(1).replace('.', ',');
+  const abaixoSetor = BENCH_SETOR[idFraco] > notaFraco;
+
+  let frase;
+  if (notaGeral >= 4.1) {
+    frase = `Sua operação já é referência. O detalhe que separa os melhores dos demais agora está na consistência de <strong>${nomeFraco}</strong>, seu ponto de menor maturidade. Pequenos ganhos aqui se multiplicam no resultado final.`;
+  } else if (abaixoSetor) {
+    frase = `O ponto que mais drena resultado hoje é <strong>${nomeFraco}</strong>. Você está <strong>${gapSetor} ponto(s) abaixo da média do seu setor</strong> e <strong>${gapMercado} abaixo das melhores empresas do mercado</strong>. Cada nível de maturidade recuperado aqui costuma se traduzir diretamente em margem e capacidade que hoje escapam sem aparecer no relatório.`;
+  } else {
+    frase = `Você já superou a média do setor, mas <strong>${nomeFraco}</strong> ainda é seu maior espaço de ganho: <strong>${gapMercado} ponto(s) o separam das melhores empresas do mercado</strong>. É exatamente nessa distância que mora o resultado que ainda não está sendo capturado.`;
+  }
+
+  txt.innerHTML = frase;
+  if (gap) {
+    gap.innerHTML = `
+      <div class="gap-row">
+        <span class="gap-label">${nomeFraco}</span>
+        <div class="gap-bars">
+          <div class="gap-bar"><span style="width:${(notaFraco/5)*100}%;background:#185FA5;"></span><b>você ${notaFraco.toFixed(1).replace('.',',')}</b></div>
+          <div class="gap-bar"><span style="width:${(BENCH_SETOR[idFraco]/5)*100}%;background:#CA8A04;"></span><b>setor ${BENCH_SETOR[idFraco].toFixed(1).replace('.',',')}</b></div>
+          <div class="gap-bar"><span style="width:${(BENCH_MERCADO[idFraco]/5)*100}%;background:#16A34A;"></span><b>mercado ${BENCH_MERCADO[idFraco].toFixed(1).replace('.',',')}</b></div>
+        </div>
+      </div>`;
+  }
+}
+
+// ─── MACRO PLANO DE AÇÃO ──────────────────────────────────────────────────────
+
+const ACOES_MACRO = {
+  fundacao: {
+    titulo: 'Estruturar a base de gestão',
+    acao: 'Implantar planejamento estratégico com OKRs desdobrados até a operação e instaurar um Comitê de Resultados com cadência fixa.',
+    ganho: 'Decisão deixa de ser por achismo e a empresa passa a remar na mesma direção.'
+  },
+  capacidade: {
+    titulo: 'Destravar a capacidade ociosa',
+    acao: 'Mapear capacidade real por linha, identificar gargalos com método e dimensionar turnos pela demanda, não pelo costume.',
+    ganho: 'Você produz mais com o mesmo ativo e para de pagar por capacidade que não usa.'
+  },
+  estrategia: {
+    titulo: 'Padronizar o que gera resultado',
+    acao: 'Documentar os processos críticos em SOP/POP, garantir aplicação com auditoria e instalar rotina de melhoria contínua.',
+    ganho: 'O resultado deixa de depender de heróis e passa a depender de processo.'
+  },
+  indicadores: {
+    titulo: 'Transformar dado em decisão',
+    acao: 'Montar a árvore de KPIs conectada à estratégia, painel de gestão à vista e tratativa de desvio via Fato-Causa-Ação.',
+    ganho: 'Todo indicador fora da meta vira ação rastreável, e o mesmo problema para de voltar.'
+  }
+};
+
+function renderMacroPlano(notas) {
+  const wrap = document.getElementById('macro-plan');
+  if (!wrap) return;
+
+  // ordena do pilar mais fraco ao mais forte (prioridade de ação)
+  const ordem = Object.entries(notas).sort((a, b) => a[1] - b[1]);
+
+  wrap.innerHTML = '';
+  ordem.forEach(([id, nota], i) => {
+    const ac = ACOES_MACRO[id];
+    if (!ac) return;
+    const prioridade = i === 0 ? 'Prioridade 1' : i === 1 ? 'Prioridade 2' : `Etapa ${i + 1}`;
+    const item = document.createElement('div');
+    item.className = 'macro-item fade-up fade-up-' + ((i % 4) + 1);
+    item.innerHTML = `
+      <div class="macro-step">${i + 1}</div>
+      <div class="macro-content">
+        <div class="macro-head">
+          <span class="macro-pilar">${PILARES_NOMES[id]}</span>
+          <span class="macro-prio">${prioridade}</span>
+        </div>
+        <h4>${ac.titulo}</h4>
+        <p class="macro-acao">${ac.acao}</p>
+        <p class="macro-ganho">${ac.ganho}</p>
+      </div>`;
+    wrap.appendChild(item);
+  });
+}
+
+// ─── BENCHMARK (dados fictícios para comparação) ──────────────────────────────
+// ordem dos eixos: fundacao, capacidade, estrategia, indicadores
+
+const BENCH_MERCADO = { fundacao: 4.6, capacidade: 4.4, estrategia: 4.7, indicadores: 4.5 }; // melhor do mercado
+const BENCH_SETOR   = { fundacao: 3.2, capacidade: 2.9, estrategia: 3.1, indicadores: 2.7 }; // média do setor (benchmarking)
+
 // ─── RADAR ────────────────────────────────────────────────────────────────────
 
 function renderRadar(notas) {
   const canvas = document.getElementById('radar-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const W = canvas.width = 300, H = canvas.height = 300;
-  const cx = W/2, cy = H/2, R = 110;
-  const values = Object.values(notas), n = values.length;
+  const W = canvas.width = 340, H = canvas.height = 340;
+  const cx = W/2, cy = H/2, R = 118;
+
+  const eixos = ['fundacao','capacidade','estrategia','indicadores'];
+  const n = eixos.length;
   const ang = i => (Math.PI*2/n)*i - Math.PI/2;
   const pt  = (i,v) => ({ x: cx+(v/5)*R*Math.cos(ang(i)), y: cy+(v/5)*R*Math.sin(ang(i)) });
 
   ctx.clearRect(0,0,W,H);
+
+  // grade circular
   for (let lvl=1;lvl<=5;lvl++) {
     ctx.beginPath();
     for (let i=0;i<n;i++) {
@@ -214,18 +324,42 @@ function renderRadar(notas) {
     }
     ctx.closePath(); ctx.strokeStyle=lvl===5?'#CBD5E1':'#E2E8F0'; ctx.lineWidth=0.5; ctx.stroke();
   }
+  // raios
   for (let i=0;i<n;i++) {
     ctx.beginPath(); ctx.moveTo(cx,cy);
     ctx.lineTo(cx+R*Math.cos(ang(i)), cy+R*Math.sin(ang(i)));
     ctx.strokeStyle='#E2E8F0'; ctx.lineWidth=0.5; ctx.stroke();
   }
-  ctx.beginPath();
-  values.forEach((v,i) => { const p=pt(i,v); i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y); });
-  ctx.closePath(); ctx.fillStyle='rgba(24,95,165,0.15)'; ctx.strokeStyle='#185FA5'; ctx.lineWidth=2; ctx.fill(); ctx.stroke();
-  values.forEach((v,i) => {
-    const p=pt(i,v); ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2);
-    ctx.fillStyle='#185FA5'; ctx.fill(); ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
-  });
+
+  // helper para desenhar uma série
+  function serie(valores, fill, stroke, lineWidth, dash, dots) {
+    ctx.setLineDash(dash || []);
+    ctx.beginPath();
+    valores.forEach((v,i) => { const p=pt(i,v); i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y); });
+    ctx.closePath();
+    if (fill) { ctx.fillStyle=fill; ctx.fill(); }
+    ctx.strokeStyle=stroke; ctx.lineWidth=lineWidth; ctx.stroke();
+    ctx.setLineDash([]);
+    if (dots) {
+      valores.forEach((v,i) => {
+        const p=pt(i,v); ctx.beginPath(); ctx.arc(p.x,p.y,4,0,Math.PI*2);
+        ctx.fillStyle=stroke; ctx.fill(); ctx.strokeStyle='#fff'; ctx.lineWidth=1.5; ctx.stroke();
+      });
+    }
+  }
+
+  const vMercado = eixos.map(e => BENCH_MERCADO[e]);
+  const vSetor   = eixos.map(e => BENCH_SETOR[e]);
+  const vEmpresa = eixos.map(e => notas[e] ?? 0);
+
+  // 1º melhor do mercado (verde, fundo bem leve)
+  serie(vMercado, 'rgba(22,163,74,0.06)', '#16A34A', 1.5, [5,4], false);
+  // 2º média do setor (laranja tracejado)
+  serie(vSetor, 'rgba(202,138,4,0.05)', '#CA8A04', 1.5, [3,3], false);
+  // 3º sua empresa (azul sólido, em destaque, por cima)
+  serie(vEmpresa, 'rgba(24,95,165,0.18)', '#185FA5', 2.5, [], true);
+
+  // rótulos dos eixos
   ['Fundação','Capacidade','Estratégia','Indicadores'].forEach((l,i) => {
     const r=R+22; ctx.font='11px Inter,sans-serif'; ctx.fillStyle='#64748B'; ctx.textAlign='center';
     ctx.fillText(l, cx+r*Math.cos(ang(i)), cy+r*Math.sin(ang(i))+4);
@@ -243,11 +377,20 @@ function setupEbookForm(lead) {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    const nome  = (ni && ni.value || '').trim();
+    const email = (ei && ei.value || '').trim();
+    if (!nome || !email) { mostrarToast('Preencha nome e e-mail para liberar.', ''); return; }
+
+    // guarda o lead capturado neste passo
+    const novoLead = { ...lead, nome, email };
+    localStorage.setItem('evox_lead', JSON.stringify(novoLead));
+
     const btn = form.querySelector('button');
-    btn.disabled = true; btn.textContent = '✓ Download liberado!';
-    mostrarToast('✓ Ebook liberado! Download iniciando...', 'success');
+    btn.disabled = true; btn.innerHTML = '✓ Plano liberado!';
+    mostrarToast('✓ Plano liberado! Download iniciando...', 'success');
+
     const link = document.createElement('a');
-    link.href = 'assets/ebook.pdf'; link.download = 'ebook-evox.pdf'; link.click();
+    link.href = 'assets/plano-evox.pdf'; link.download = 'plano-evox.pdf'; link.click();
   });
 }
 

@@ -286,6 +286,12 @@ function renderPilar(idx) {
             <span class="option-text">${opcao}</span>
           </label>
         `).join('')}
+        <label class="option-label option-na ${valorSalvo === 'na' ? 'selected' : ''}" data-q="${qIdx}" data-v="na">
+          <input type="radio" name="q${qIdx}" value="na" ${valorSalvo === 'na' ? 'checked' : ''}>
+          <span class="option-indicator"></span>
+          <span class="option-score">N/A</span>
+          <span class="option-text">Não se aplica à minha operação</span>
+        </label>
       </div>
     `;
     container.appendChild(card);
@@ -295,7 +301,8 @@ function renderPilar(idx) {
   container.querySelectorAll('.option-label').forEach(label => {
     label.addEventListener('click', () => {
       const qIdx = parseInt(label.dataset.q);
-      const val  = parseInt(label.dataset.v);
+      const raw  = label.dataset.v;
+      const val  = raw === 'na' ? 'na' : parseInt(raw);
       selecionarOpcao(qIdx, val);
     });
   });
@@ -314,7 +321,8 @@ function selecionarOpcao(qIdx, valor) {
   // atualiza visual
   const opts = document.querySelectorAll(`[data-q="${qIdx}"]`);
   opts.forEach(opt => {
-    opt.classList.toggle('selected', parseInt(opt.dataset.v) === valor);
+    const optVal = opt.dataset.v === 'na' ? 'na' : parseInt(opt.dataset.v);
+    opt.classList.toggle('selected', optVal === valor);
   });
 
   atualizarBotoes();
@@ -400,12 +408,18 @@ function voltar() {
 function calcularEIrParaResultado() {
   const notas = {};
   PILARES.forEach(pilar => {
-    const soma = pilar.perguntas.reduce((acc, _, qIdx) => {
+    let soma = 0, respondidas = 0;
+    pilar.perguntas.forEach((_, qIdx) => {
       const val = respostas[`${pilar.id}_${qIdx}`];
-      return acc + (val !== undefined ? val : 0);
-    }, 0);
-    // cada pergunta vale 0-4, máximo 20, escala para 0-5
-    notas[pilar.id] = parseFloat(((soma / 20) * 5).toFixed(1));
+      if (val !== undefined && val !== 'na') {
+        soma += val;
+        respondidas++;
+      }
+    });
+    // cada pergunta vale 0-4; média das respondidas, escalada para 0-5
+    // se o pilar inteiro for N/A, fica 0 para não quebrar o radar
+    const media = respondidas > 0 ? (soma / respondidas) : 0;
+    notas[pilar.id] = parseFloat(((media / 4) * 5).toFixed(1));
   });
 
   const notaGeral = parseFloat(
